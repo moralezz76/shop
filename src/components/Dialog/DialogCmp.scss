@@ -1,0 +1,54 @@
+.modal {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    color: #dddddd;
+
+    
+    &:before {
+        background-color: black;
+        opacity: .0;
+        content: ' ';
+        width: 100%;
+        height: 100%;
+        transition: opacity 0.2s;
+    }
+
+    &.visible {
+         &:before {
+            opacity: .7;
+         }
+    }
+
+    .dialog {
+       -webkit-transform: translateY(calc(-100% - 30px)); 
+        transform: translateY(calc(-100% - 30px)); 
+        transition: transform 0.5s;
+        position: absolute;
+        background-color: #2e323b;
+        display: inline-block;
+        margin-top: 30px;
+        width: 380px;
+        border: 1px solid #2c2f38 ;
+        border-radius: 6px;
+        > div {
+            padding: 10px;
+        }
+        &.visible {
+            -webkit-transform: translateY(0%); 
+            transform: translateY(0%); 
+        }
+
+        .close-button {
+            display: inline-block;
+            position: absolute;
+            right: 2px;
+            cursor: pointer;
+        }
+    }
+
+}

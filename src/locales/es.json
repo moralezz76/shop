@@ -1,0 +1,12 @@
+{
+  "labelName": "Nombre",
+  "labelPassword": "Contraseña",
+  "labelPassword2": "Repetir contraseña",
+  "labelAge": "Edad",
+
+  "validationRequired": "Este campo es requerido",
+  "validationMin": "Se requiere un valor mayor a {{ min }}",
+  "validationMax": "Se requiere un valor menor a {{ max }}",
+  "validationPasswordRequired": "La contraseña es requerida",
+  "validationPassword2": "La contraseñas no coinciden"
+}

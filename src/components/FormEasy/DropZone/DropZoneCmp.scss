@@ -1,0 +1,46 @@
+//@import "../../../styles/index.scss";
+
+.dropzone {
+    border: 2px dashed #cccccc;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    
+    .remove-all{
+      font-size: 14px;
+      text-decoration: underline;
+      color: #dddddd;
+    }
+
+   .cloud-upload{
+      text-align: center;
+      
+    }
+
+    .files {
+      > div {
+        display: flex;
+        .file-name {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        div {
+          white-space: nowrap;
+          font-size: 14px;
+          
+        }
+      }
+    }
+    .resume {
+      padding-top: 6px;
+      border-top: 1px dotted #999999;
+      text-align: end;
+      padding-right: 10px;
+    }
+
+    .info {
+      text-align: center;
+      padding-bottom: 5px;
+    }
+}

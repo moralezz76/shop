@@ -1,0 +1,16 @@
+.social-login {
+    margin-top: 10px;
+    .social-button {
+        display: block;
+        
+        button {   
+        min-width: 210px !important;
+        min-height: 44px !important;
+        text-align: center;
+        border-radius: 2px !important;
+        margin: 2px;
+        padding: 10px;
+        font-size: 14px;
+        }
+    }
+}

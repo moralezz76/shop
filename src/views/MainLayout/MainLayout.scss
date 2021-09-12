@@ -1,0 +1,64 @@
+.main-layout {
+    
+
+    width: 1199.98px;
+    min-height: calc(100vh - 20px);
+    display: flex;
+    color: white;
+    font-size: calc(5px + 2vmin);
+    background-color: #303238;
+    border-radius: 10px;
+    
+    .header {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+
+    .content {
+        display: flex;
+        flex: 1;
+        padding: 10px;
+    }
+
+    .left-menu {
+        min-width: 240px;
+        border-right: 1px solid #282c34;
+        .as-menu {
+            border-radius: 5px;
+            background: #33343a;
+            margin: 16px;
+            padding: 10px;
+        }
+
+        h3 {
+            text-align: center;
+        }
+        .title {
+            font-size: 10px;
+            margin-bottom: 6px;
+        }
+    }
+
+    .block {
+        display: flex;
+        > div {
+            flex: 2;
+        }
+        .values {
+            flex: 4;
+        }
+    }
+
+    .size {
+        &-small {
+            font-size: calc(1px + 2vmin) !important;
+        }
+        &-normal {
+            font-size: calc(5px + 2vmin) !important;
+        }
+        &-large {
+            font-size: calc(7px + 2vmin) !important;
+        }
+    }
+}

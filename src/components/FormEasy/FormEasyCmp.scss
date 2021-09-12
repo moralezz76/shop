@@ -1,0 +1,27 @@
+.form-easy {
+  padding: 10px;
+    position: relative;
+  .waiting {
+    position: absolute;
+    top:0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+    
+    
+    &::after {
+        background-color: black;
+        position: absolute;
+        top:0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        content: ' ';
+        opacity: 0.3;
+    }
+  }
+}

@@ -1,0 +1,8 @@
+export enum GlobalActions {
+  LOADING = 'LOADING',
+  REQUEST = 'REQUEST',
+  MODAL_ADD = 'MODAL_ADD',
+  MODAL_REMOVE = 'MODAL_REMOVE',
+  TOAST_ADD = 'TOAST_ADD',
+  TOAST_REMOVE = 'TOAST_REMOVE',
+}

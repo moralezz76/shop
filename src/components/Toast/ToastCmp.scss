@@ -1,0 +1,45 @@
+.toast-container {
+    position: absolute;
+    right: 10px;
+    
+
+    .toast {
+        width: 200px;
+        background-color: rgb(109, 109, 109);
+        color: white;
+        border: 1px solid #666;
+        border-radius: 10px;
+        margin-bottom: 0px;
+        max-height: 0px;
+        opacity: 0;
+        overflow: hidden;
+        transition: max-height 0.5s, opacity 0.5s, margin-bottom 0.5s;
+        position: relative;
+
+        &.visible {
+            max-height: 200px;
+            opacity: 1;
+            margin-bottom: 10px;
+        }
+
+       .toast-body {
+           margin: 10px;
+            .close-button {
+                display: inline-block;
+                position: absolute;
+                right: 3px;
+                top: 3px;
+                cursor: pointer;
+            }
+
+            h4 {
+                margin: 0px;
+                
+            }
+
+            /*.content {
+                margin-bottom: 10px;
+            }*/
+        }
+    }
+}
