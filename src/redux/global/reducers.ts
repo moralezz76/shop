@@ -3,7 +3,9 @@ import { ActionType } from 'typesafe-actions';
 import { GlobalActions } from './types';
 
 const initialState = {
+  session: null,
   loading: false,
+  roles: '',
   modals: [],
   toasts: [],
 };
@@ -35,6 +37,12 @@ const globalReducer = handleActions<GlobalState, ActionType<any>>(
       const { toasts: _toasts } = state;
       const toasts = _toasts.filter(({ id }: any) => id !== _id);
       return { ...state, toasts: [...toasts] };
+    },
+    [GlobalActions.SESSION_SET]: (state, { payload: session }) => {
+      return { ...state, session, ...(session === null && { roles: '' }) };
+    },
+    [GlobalActions.ROLES_SET]: (state, { payload: roles }) => {
+      return { ...state, roles };
     },
   },
   initialState

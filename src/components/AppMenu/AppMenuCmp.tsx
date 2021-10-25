@@ -3,11 +3,11 @@ import { menus } from '../../utils/request';
 import './AppMenuCmp.scss';
 
 const AppMenuCmp = (props: any) => {
-  const { request } = props;
+  const { appMenu } = props;
   return (
     <div className="app-menu">
-      {menus.map((menu: any) => (
-        <MenuButton request={request} {...menu} />
+      {[...menus, ...appMenu].map((menu: any, k: number) => (
+        <MenuButton key={`a_m_${k}`} {...menu} />
       ))}
     </div>
   );

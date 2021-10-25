@@ -1,0 +1,17 @@
+.paginator {
+    text-align: right;
+    &-content{
+        display: inline-table;
+        width: 200px;
+        
+    }
+    .btn {
+        
+        margin: -3px 7px 0px 5px;
+        padding: 0px;
+        svg {
+            margin: 5px 8px 2px;
+        }
+
+    }
+}

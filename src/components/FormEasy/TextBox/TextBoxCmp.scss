@@ -1,14 +1,14 @@
 .field {
-    input {
-    min-height: 28px;
-    border: 0px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-    text-indent: 8px;
+    .input {
+        min-height: 32px;
+        border: 1px solid rgb(85, 90, 104) !important;
+        border-radius: 3px;
+        width: 100%;
+        text-indent: 8px;
 
-    &[type='password'] {
-        font-size: 20px;
+        &[type='password'] {
+            font-size: 20px;
+        }
     }
-}
     
 }

@@ -1,9 +1,13 @@
 .field {
     textarea {
-    border: 0px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-    text-indent: 8px;
+        padding: 8px;
+        box-sizing: border-box;
+        
+        border: 0px solid #ccc;
+        border-radius: 3px;
+        width: 100%;
+        resize: none;
+        border: 1px solid rgb(85, 90, 104) !important;
     }
     
 }

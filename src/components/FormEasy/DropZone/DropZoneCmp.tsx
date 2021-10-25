@@ -4,6 +4,7 @@ import { useDropzone } from 'react-dropzone';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { BsTrash } from 'react-icons/bs';
 import { FieldBase } from '..';
+import t from '../../../utils/i18n';
 import './DropZoneCmp.scss';
 
 const DropZoneCmp = (props: any) => {
@@ -87,19 +88,15 @@ const DropZoneCmp = (props: any) => {
   const keys = Object.keys(files);
   const { length: totalFiles } = keys;
 
-  //console.log(props);
-
   return (
     <FieldBase {...props}>
-      <div {...getRootProps({ className: 'dropzone size-small' })}>
+      <div {...getRootProps({ className: 'dropzone' })}>
         <div>
           <input {...getInputProps()} />
           <div className="cloud-upload">
             <AiOutlineCloudUpload size="50" />
           </div>
-          {totalFiles === 0 && (
-            <div className="info">Drag 'n' drop some files here, or click to select files</div>
-          )}
+          {totalFiles === 0 && <div className="info">{t('dropzoneTitle')}</div>}
         </div>
         <aside>
           <div className="files">{acceptedFileItems}</div>

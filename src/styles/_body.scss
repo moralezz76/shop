@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont,  'DM Sans', Geneva, Verdana, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.rdg-cell {
+    box-shadow: none !important;
+}
+
+a {
+&:link{
+  color: var(--bs-gray-300) !important;
+}
+ &:visited {
+  color: var(--bs-gray-500) !important;
+}
+}

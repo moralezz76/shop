@@ -1,12 +1,44 @@
 {
-  "labelName": "Nombre",
-  "labelPassword": "Contraseña",
-  "labelPassword2": "Repetir contraseña",
-  "labelAge": "Edad",
+  "labelDropzoneTitle": "Puede arrastrar sus archivos aquí, o haga click para buscar...",
+  "labelProductType": "Tipo de artículo",
+  "labelProductTitle": "Nombre del artículo",
+  "labelDescription": "Descripción",
+  "labelPrice": "Precio",
+  "labelImage": "Selecciona una imagen",
+  "labelProduct": "Producto",
+  "labelCrypto": "Crypto",
+  "labelAddNewProduct": "Adicionar nuevo producto...",
+  "labelUpdatingProductTitle": "Modificando producto...",
+  "labelAddingProductTitle": "Adicionando producto...",
+  "labelShowing": "Mostrando campos",
+  "labelOf": "de",
+  "LabelAllUsers": "(todos)",
 
   "validationRequired": "Este campo es requerido",
   "validationMin": "Se requiere un valor mayor a {{ min }}",
   "validationMax": "Se requiere un valor menor a {{ max }}",
   "validationPasswordRequired": "La contraseña es requerida",
-  "validationPassword2": "La contraseñas no coinciden"
+  "validationPassword2": "La contraseñas no coinciden",
+
+  "errorDuplicateRequest": "Ocurrió un error mientras intentaba guardar datos, es muy probable que la información ya se había recibido...",
+  "errorNoToken": "Ocurrió un error interno que le impide realizar esta acción",
+
+  "buttonSubmit": "Enviar",
+  "buttonCancelSubmit": "Cancelar",
+
+  "tabInfo": "Info",
+  "tabRequest": "Request",
+  "tabResponse": "Response",
+  "tabHeaders": "Headers",
+
+  "columnActions": "Acciones",
+  "columnUserName": "Nombre de usuario",
+  "columnDate": "Fecha",
+  "columnTime": "Hora",
+  "columnMethod": "Método",
+  "columnFile": "Nombre de archivo",
+  "columnId": "Id",
+  "columnName": "Nombre",
+  "columnEmail": "Email",
+  "columnRoles": "Roles"
 }

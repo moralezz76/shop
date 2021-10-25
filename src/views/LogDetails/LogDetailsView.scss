@@ -1,0 +1,12 @@
+.log-details {
+   flex-direction: column;
+
+   .content-body {
+      background-color: #272822;
+      padding: 10px;
+      overflow: auto;
+      > div {
+         display: inline-block;
+      }
+   }
+}

@@ -8,6 +8,19 @@ use Illuminate\Support\Facades\Hash;
 
 class SessionActive
 {
+
+
+    public function userSession($token, &$encode_data = '', &$password = '')
+    {
+        list($encode_data, $password) = explode("|", $token);
+        $decode_data = base64_decode($encode_data);
+        $array_data = json_decode($decode_data, true);
+        $user_token = $array_data['token'];
+        $currentSession = Session::where('token', $user_token)->get();
+        return $currentSession->first();
+    }
+
+
     /**
      * Handle an incoming request.
      *
@@ -17,30 +30,25 @@ class SessionActive
      */
     public function handle($request, Closure $next)
     {
+
         $token = $request->header('token');
         if (!$token) {
             return response()->json([
                 'status' => -1,
                 'data' => [
-                    'error' => 'error_no_token'
+                    'error' => 'noToken'
                 ]
             ], 200);
         }
-        list($encode_data, $password) = explode("|", $token);
-        $decode_data = base64_decode($encode_data);
-        $array_data = json_decode($decode_data, true);
 
-        $user_token = $array_data['token'];
-
-        $currentSession = Session::where('token', $user_token)->get();
-        $session = $currentSession->first();
+        $session = $this->userSession($token, $encode_data, $password);
         if ($session) {
             if (Hash::check($encode_data . $session['hashed_password'], $password)) {
                 if ($request->ip() != $session['ip']) {
                     return response()->json([
                         'status' => -1,
                         'data' => [
-                            'error' => 'error_token_denied'
+                            'error' => 'tokenDenied'
                         ]
                     ], 200);
                 }
@@ -48,7 +56,7 @@ class SessionActive
                 return response()->json([
                     'status' => -1,
                     'data' => [
-                        'error' => 'error_unknow_token'
+                        'error' => 'unknowToken'
                     ]
                 ], 200);
             }
@@ -56,7 +64,7 @@ class SessionActive
             return response()->json([
                 'status' => -1,
                 'data' => [
-                    'error' => 'error_unknow_session'
+                    'error' => 'unknowSession'
                 ]
             ], 200);
         }

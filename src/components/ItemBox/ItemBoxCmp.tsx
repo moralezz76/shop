@@ -1,11 +1,15 @@
+import classNames from 'classnames';
+import { Roles } from '..';
 import './ItemBoxCmp.scss';
 
 const ItemBoxCmp = (props: any) => {
-  const { children, ...rest } = props;
+  const { roles, children, className, ...rest } = props;
   return (
-    <div className="item-box" {...rest}>
-      {children}
-    </div>
+    <Roles roles={roles}>
+      <div className={classNames('item-box', className)} {...rest}>
+        {children}
+      </div>
+    </Roles>
   );
 };
 

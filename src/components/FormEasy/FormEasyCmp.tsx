@@ -1,10 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import classnames from 'classnames';
 import { Field, Form, Formik } from 'formik';
-import _ from 'lodash';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
+import { RootState } from 'ReduxTypes';
 import * as yup from 'yup';
-import { DropZone, Textarea, TextBox } from '.';
+import { DropZone, SelectAsync as Select, Textarea, TextBox } from '.';
 import loading from '../../assets/svg/loading.svg';
+import { removeModalAction } from '../../redux/global/actions';
+import { Randy } from '../../utils/constants';
 import t from '../../utils/i18n';
 import './FormEasyCmp.scss';
 
@@ -13,16 +18,21 @@ const FormEasyCmp = (props: any) => {
     fields,
     initialValues = {},
     className,
-    submitButton,
     children,
     onSubmit,
     validateSubmit = async (v: any, cb: (v: any) => void) => cb(v),
     onFieldChange,
+    submitButton,
+    closeModal,
+    removeModal,
   } = props;
 
-  const iniValues = Object.keys(fields).reduce((ret: any, key: any) => {
-    return { ...ret, [key]: initialValues[key] || '' };
-  }, {});
+  const [data_token, setRandy] = useState(0);
+  const [formMessage, setFormMessage] = useState<any>(null);
+
+  useEffect(() => {
+    setRandy(Randy());
+  }, []);
 
   let myForm: any = null;
 
@@ -33,7 +43,7 @@ const FormEasyCmp = (props: any) => {
       if (typeof value === 'string') {
         const { path, createError }: any = this;
         const [v, error] = value.split('|validation');
-        return error ? createError({ path, message: t(`validation${error}`, { v }) }) : this;
+        return error ? createError({ path, message: t(error, 'validation', v) }) : this;
       }
       return this;
     },
@@ -47,16 +57,8 @@ const FormEasyCmp = (props: any) => {
     });
   };
 
-  const handleFieldChange = (event_form: any) => {
-    if (onFieldChange) {
-      const {
-        event: {
-          target: { name, value },
-        },
-      } = event_form;
-
-      onFieldChange({ name, value, set });
-    }
+  const handleFieldChange = (name: any, value: any) => {
+    onFieldChange && onFieldChange({ name, value, set });
   };
 
   const typeCmp: any = {
@@ -64,35 +66,44 @@ const FormEasyCmp = (props: any) => {
       component: DropZone,
     },
     text: {},
+    hidden: {},
     textarea: {
       component: Textarea,
     },
     number: {
       postValidation: (v: any) => {
-        //const reg = new RegExp(/^\d+$./);
-        //return reg.test(v) || v === '' ? true : 'validationNumber';
-        return !isNaN(v) ? true : 'validationNumber';
+        return !isNaN(v) ? true : 'Number';
       },
     },
     email: {
       validation: {
-        email: [t('validationEmail')],
+        email: [t('Email', 'validation')],
       },
     },
     password: {},
     password2: {
       type: 'password',
     },
+    select: {
+      component: Select,
+    },
+    multiselect: {
+      component: Select,
+      isMulti: true,
+    },
   };
 
   const getValidationSchema = () => {
     const { values } = myForm;
-    //console.log(values);
 
     const _v = Object.keys(fields).reduce((ret: any, keyName: any) => {
-      const { type, validation = {} } = fields[keyName];
+      const fObject = fields[keyName];
+      if (React.isValidElement(fObject)) return ret;
+
+      const { type, validation = {} } = fObject;
+
       let { validation: defValidation = {} } = typeCmp[type];
-      let { isRequired = false } = fields[keyName];
+      let { isRequired = false } = fObject;
       isRequired = typeof isRequired === 'function' ? isRequired(values) : isRequired;
 
       const tmp_valid = { ...validation };
@@ -100,7 +111,7 @@ const FormEasyCmp = (props: any) => {
 
       const info = Object.keys(tmp_valid).reduce((ret: any, item: any) => {
         const value = tmp_valid[item];
-        const text = t(`validation${_.upperFirst(item)}`);
+        const text = t(item, 'validation');
         const value_arr = value === true ? [text] : [value, text];
         return { ...ret, [item]: value_arr };
       }, defValidation);
@@ -139,7 +150,16 @@ const FormEasyCmp = (props: any) => {
 
   const allFieldsObj = (new_values: any) => {
     return Object.keys(fields).reduce((ret: any, key: any) => {
+      const fObject = fields[key];
+      if (React.isValidElement(fObject)) {
+        return {
+          ...ret,
+          [key]: React.cloneElement<any>(fObject, { values: new_values }),
+        };
+      }
+
       const { type: ftype, keypress } = fields[key];
+
       const { component = TextBox, type = ftype }: any = typeCmp[ftype];
       let {
         isHidden = false,
@@ -157,7 +177,7 @@ const FormEasyCmp = (props: any) => {
             name={key}
             component={component}
             type={type}
-            fieldChange={handleFieldChange}
+            onFieldChange={handleFieldChange}
             onKeyPress={keypress}
             {...injectFields(new_values, { isDisabled, isRequired, isHidden, className })}
             {...rest}
@@ -182,22 +202,31 @@ const FormEasyCmp = (props: any) => {
         }
       }
     });
+
     if (valid) {
+      setFormMessage('');
       await validateSubmit(new_values, async (validate_values: any) => {
-        onSubmit && (await onSubmit(validate_values));
+        onSubmit &&
+          (await onSubmit({ ...validate_values, data_token }, (msg: any) => {
+            const { error } = msg || {};
+            error ? setFormMessage(error) : removeModal();
+          }));
       });
     }
   };
 
+  if (Object.keys(initialValues).length === 0) return null;
+
   return (
     <Formik
-      initialValues={iniValues}
+      initialValues={initialValues}
       validationSchema={getValidationSchema}
       onSubmit={handleSubmit}
       enableReinitialize
     >
       {form => {
         const { isSubmitting, values } = form;
+
         myForm = form;
         const allChild = allFieldsObj(values);
         return (
@@ -212,10 +241,23 @@ const FormEasyCmp = (props: any) => {
             {typeof children === 'function'
               ? children(allChild)
               : Object.keys(allChild).map((item: any) => allChild[item])}
-            {submitButton && (
-              <button type="submit" disabled={isSubmitting}>
-                {t(submitButton)}
-              </button>
+            {formMessage && <div className="label label-error">{formMessage}</div>}
+            {(submitButton || closeModal) && (
+              <div className="button-container">
+                {submitButton && (
+                  <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
+                    {t(submitButton || '', 'button')}
+                  </button>
+                )}
+                {closeModal && (
+                  <span
+                    className={classnames('btn btn-default', { disabled: isSubmitting })}
+                    onClick={removeModal}
+                  >
+                    {t(closeModal || '', 'button')}
+                  </span>
+                )}
+              </div>
             )}
           </Form>
         );
@@ -224,4 +266,15 @@ const FormEasyCmp = (props: any) => {
   );
 };
 
-export default FormEasyCmp;
+const mapStateToProps = (state: RootState) => {
+  return {};
+};
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators(
+    {
+      removeModal: removeModalAction,
+    },
+    dispatch
+  );
+export default connect(mapStateToProps, mapDispatchToProps)(FormEasyCmp);
+//export default FormEasyCmp;

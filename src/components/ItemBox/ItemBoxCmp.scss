@@ -1,9 +1,11 @@
 .item-box {
-    display: inline-block;
-    min-width: 150px;
-    max-width: 300px;
+    width: 150px;
+    max-width: 150px;
     min-height: 180px;
-    border: 3px dashed #999999;
-    border-radius: 6px ;
     cursor: pointer;
+    
+    margin: 5px;
+    display: inline-table;
+   
+
 }

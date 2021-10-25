@@ -1,0 +1,26 @@
+.tab {
+  &-list {
+    &-item {
+      display: inline-block;
+      list-style: none;
+      padding: 5px 15px;
+      cursor: pointer;
+
+      margin-right: 6px;
+      font-size: 16px;
+      &.disabled {
+        color: #999999;
+      }
+    }
+  }
+}
+
+.active {
+  border-bottom: 3px solid #666;
+  font-weight: bolder;
+}
+
+.at-right {
+  position: absolute;
+  right: 40px;
+}

@@ -4,16 +4,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { RootState } from 'ReduxTypes';
 import { requestAction } from '../../redux/global/actions';
-import { StorageHelper } from '../../utils/StorageHelper';
 import './SocialLoginCmp.scss';
 
 const SocialLoginCmp = (props: any) => {
   const { request, onSocialLoginResponse = () => {} } = props;
 
   const onSuccess = (r: any) => {
-    const { user } = r;
-    StorageHelper.add('user', user);
-    onSocialLoginResponse(user);
+    const { session, roles } = r;
+    onSocialLoginResponse(session, roles);
   };
 
   const loginWithSocialData = (fields: any) => {
@@ -30,7 +28,7 @@ const SocialLoginCmp = (props: any) => {
   };
 
   const responseFacebook = (responseData: any) => {
-    console.log(responseData);
+    if (responseData.status === 'unknown') return;
     const {
       accessToken,
       email,

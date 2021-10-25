@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('socialId');
             $table->string('imageUrl', 255);
+            $table->string('roles', 255)->default('user');
             $table->softDeletes();
             $table->timestamps();
         });

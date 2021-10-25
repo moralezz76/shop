@@ -6,7 +6,7 @@ const TextBoxCmp = (props: any) => {
     field: { name, onChange, onBlur, value },
     form,
     type,
-    fieldChange,
+    onFieldChange,
     onKeyPress,
     isDisabled,
   } = props;
@@ -14,7 +14,7 @@ const TextBoxCmp = (props: any) => {
   const { isSubmitting } = form;
   const handleChange = async (event: any) => {
     await onChange(event);
-    fieldChange && fieldChange({ event, form });
+    onFieldChange && onFieldChange({ event, form });
   };
 
   // json field onchange
@@ -35,6 +35,7 @@ const TextBoxCmp = (props: any) => {
         disabled={isSubmitting || isDisabled}
         step="any"
         defaultValue={value}
+        className="input"
       />
     </FieldBase>
   );

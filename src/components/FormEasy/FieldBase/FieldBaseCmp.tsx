@@ -1,6 +1,5 @@
 import classnames from 'classnames';
 import { ErrorMessage } from 'formik';
-import _ from 'lodash';
 import t from '../../../utils/i18n';
 import './FieldBaseCmp.scss';
 
@@ -12,13 +11,17 @@ const FieldBaseCmp = (props: any) => {
     isHidden = false,
     className,
     field: { name },
+    tlte,
+    type,
+    fieldStyle,
   } = props;
 
+  if (type === 'hidden') return children;
   return !isHidden ? (
-    <div className={classnames('field', className)}>
+    <div className={classnames('field', className)} style={fieldStyle}>
       {!noTitle && (
         <div className="field-title">
-          {t(`label${_.upperFirst(name)}`)} {isRequired && <label className="required">*</label>}
+          {t(tlte || name)}: {isRequired && <label className="required">*</label>}
         </div>
       )}
       {children}

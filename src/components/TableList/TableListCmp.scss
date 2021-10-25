@@ -1,0 +1,30 @@
+.table-list {
+   
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+   .data-grid {
+       flex: 1;
+       height: inherit;
+       background-color: inherit;
+       border-color:  #4d4957 ;
+       color: #dddddd;
+       div {
+            background-color: inherit;
+            
+            border-color: #4d4957  ;
+       }
+
+       .rdg-header-row  {
+       .rdg-cell {
+           background-color: #4d4957;
+       }
+
+       
+    }
+    .rdg-row-even {
+           background-color:   #25262b !important;
+       }
+   }
+ 
+}

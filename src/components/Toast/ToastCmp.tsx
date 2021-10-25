@@ -6,10 +6,11 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { RootState } from 'ReduxTypes';
 import { removeToastAction } from '../../redux/global/actions';
 import { getToasts } from '../../redux/global/selectors';
+import t from '../../utils/i18n';
 import './ToastCmp.scss';
 
 const ToastCmp = (props: any) => {
-  const { toasts = [], removeToast, scrollY } = props;
+  const { toasts = [], removeToast } = props;
 
   const [items, setItems] = useState<any>([]);
   const [visible, setVisible] = useState<any>(-1);
@@ -50,6 +51,17 @@ const ToastCmp = (props: any) => {
     }
   }, [toasts]);
 
+  const [scrollY, setScrollY] = useState('0px');
+
+  useEffect(() => {
+    const adjustScrollY = () => {
+      const { scrollY } = window;
+      setScrollY(scrollY + 'px');
+    };
+    adjustScrollY();
+    window.addEventListener('scroll', adjustScrollY);
+  }, []);
+
   return items.length ? (
     <div style={{ top: scrollY + 10 }} className="toast-container">
       {items.map((item: any) => {
@@ -66,8 +78,8 @@ const ToastCmp = (props: any) => {
               >
                 <RiCloseFill size="20px" />
               </div>
-              {title && <h4>{title}</h4>}
-              <div className="content">{content}</div>
+              {title && <h4>{t(title)}</h4>}
+              <div className="content">{t(content)}</div>
             </div>
           </div>
         );

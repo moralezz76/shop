@@ -1,0 +1,62 @@
+.formatter {
+    &-tag {
+        padding: 0px 6px 2px;
+        border-radius: 7px;
+        background: rgb(136, 133, 150) !important;
+        margin-right: 4px;
+
+        &.tag{
+            &-get {
+                background-color: var(--bs-orange) !important;
+                padding-top: 2px;
+                color: black;
+                font-weight: bolder;
+                font-size: 12px;
+            }
+             &-post {
+                background-color: var(--bs-success) !important;
+                padding-top: 2px;
+                font-weight: bolder;
+                font-size: 12px;
+            }
+        }
+    }
+
+    &-icon-social {
+        vertical-align: middle;
+        margin: 0px 2px 3px 0px;
+    }
+
+    &-action {
+        width: 22px;
+        height: 22px;
+        border-radius: 11px;
+        border: 2px solid #ccc !important;
+        background: #ccc !important;
+        display: inline-block;
+        margin: 6px 4px 0px 0px;
+        cursor: pointer;
+        &.disabled {
+            opacity: 0.3;
+            cursor: inherit;
+        }
+        &:hover {
+            background-color: #aaa !important;
+        }
+        
+        &-icon {
+            background:transparent !important;
+             position: absolute;
+             margin-top: -3px;
+            svg {
+                
+                color: rgb(47, 46, 53);
+                font-size: 18px;
+            }
+        }
+
+    }
+
+    
+
+}

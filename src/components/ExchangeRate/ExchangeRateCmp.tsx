@@ -3,7 +3,7 @@ import './ExchangeRateCmp.scss';
 const ExchangeRateCmp = (props: any) => {
   const { rates = { usdt: '0.4904 usd', usd: '0.9996 usdt' } } = props;
   return (
-    <div className="exchange-rate as-menu size-small">
+    <div className="exchange-rate as-menu">
       <div className="title">Tipo de Cambio</div>
       {Object.keys(rates).map((name: string) => {
         return (

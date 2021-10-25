@@ -1,27 +1,37 @@
-import { useHistory } from 'react-router-dom';
-import gear from './gear.svg';
+import classnames from 'classnames';
+import { useHistory, useRouteMatch } from 'react-router-dom';
+import { Icon, Roles } from '..';
 import './MenuButtonCmp.scss';
-import shutdown from './shutdown.svg';
 
 const MenuButtonCmp = (props: any) => {
-  const { request, title, route, type, onClick = () => {}, ...rest } = props;
+  const { roles, title, def = {}, route, type, onClick = () => {}, ...rest } = props;
 
-  const types: any = {
-    shutdown,
-    gear,
-  };
+  const match = useRouteMatch<any>();
+  const { path } = match;
 
   let history = useHistory();
 
   const handleClick = () => {
-    route && history.push(route);
-    onClick({ request });
+    let _r = route;
+    Object.keys(def).forEach((item: string) => {
+      _r = _r.replace(`:${item}`, def[item]);
+    });
+    route && history.push(_r);
+    onClick();
   };
 
+  //const active = true;
+
   return (
-    <div className="menu-button" onClick={handleClick} {...rest}>
-      {types[type] && <img src={types[type]} alt="exit" />} &nbsp;{title}
-    </div>
+    <Roles roles={roles}>
+      <div
+        className={classnames('menu-button', { active: path === route })}
+        onClick={handleClick}
+        {...rest}
+      >
+        {type && <Icon type={type} size="26px" color="#5d6888" />} &nbsp; {title}
+      </div>
+    </Roles>
   );
 };
 

@@ -5,7 +5,7 @@ const TextAreaCmp = (props: any) => {
   const {
     field: { name, onChange, onBlur, value },
     form,
-    fieldChange,
+    onFieldChange,
     onKeyPress,
     isDisabled,
     rows = 4,
@@ -13,8 +13,14 @@ const TextAreaCmp = (props: any) => {
 
   const { isSubmitting } = form;
   const handleChange = async (event: any) => {
+    /*const {
+      event: {
+        target: { name, value },
+      },
+    } = event;*/
     await onChange(event);
-    fieldChange && fieldChange({ event, form });
+    //onFieldChange && onFieldChange(name, value);
+    onFieldChange && onFieldChange({ event, form });
   };
 
   // json field onchange

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\v1;
 
-
+use App\Libs\GlobalLibsTrait;
 use Illuminate\Http\Request;
 use App\User;
 use App\Session;
@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 class SessionController extends Controller
 {
 
+    use GlobalLibsTrait;
 
     /**
      * Display a listing of the resource.
@@ -65,6 +66,7 @@ class SessionController extends Controller
         if (!isset($currentSession->id)) {
             $currentSession = new Session;
             $currentSession->fill($session_data);
+            $currentSession['unix_diff'] = time() - $this->getRequestToken()['time'];
             $currentSession->save();
         } else {
             $currentSession->update($session_data);
@@ -79,7 +81,8 @@ class SessionController extends Controller
             'id' => $id,
             'token' => $code . '|' . Hash::make($code . $currentSession->first()->hashed_password),
             'data' => [
-                'user' => ['email' => $user->email, 'name'  => $user->name, 'imageUrl' => $user->imageUrl],
+                'session' => ['email' => $user->email, 'name'  => $user->name, 'imageUrl' => $user->imageUrl],
+                'roles' => $user->roles
             ]
         ], 200);
     }
@@ -95,6 +98,7 @@ class SessionController extends Controller
             'status' => 1,
             'data' => [
                 'isValid' => true,
+                'roles' => $this->getSession()->first()->user->roles,
 
             ]
         ], 200);

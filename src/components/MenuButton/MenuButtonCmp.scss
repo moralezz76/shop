@@ -3,12 +3,14 @@
   padding: 4px 6px;
   font-size: 16px;
   border-radius: 5px;
-  &:hover {
+  color: #ccc;
+  &:hover, &.active {
     background-color: rgb(59, 66, 78);
+    color:white;
   }
   display: flex;
   cursor: pointer;
-    align-items: center;  
+  align-items: center;  
 
   img {
     width: 32px;

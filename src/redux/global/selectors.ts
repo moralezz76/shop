@@ -14,3 +14,11 @@ export const getModals = createSelector(getGlobalState, state => {
 export const getToasts = createSelector(getGlobalState, state => {
   return state.toasts;
 });
+
+export const getSession = createSelector(getGlobalState, state => {
+  return state.session;
+});
+
+export const getRoles = createSelector(getGlobalState, state => {
+  return state.roles;
+});

@@ -8,6 +8,8 @@ class Product extends Model
 {
     //
     protected $fillable = [
-        'title', 'description', 'price', 'attributes', 'imageUrl'
+        'title', 'ptype', 'description', 'price', 'attributes', 'imageUrl'
     ];
+
+    protected $hidden = ['created_at', 'updated_at', 'user_id'];
 }

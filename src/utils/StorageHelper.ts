@@ -6,7 +6,7 @@ export interface IStorageItem {
 export const localStorageSupported =
   typeof window['localStorage'] != 'undefined' && window['localStorage'] != null;
 
-export const StorageHelper = {
+const StorageHelper = {
   add: (key: string, item: any) => {
     const dataJson = JSON.stringify(item);
     localStorage.setItem(key, dataJson);
@@ -26,3 +26,5 @@ export const StorageHelper = {
     localStorage.clear();
   },
 };
+
+export default StorageHelper;

@@ -1,0 +1,6 @@
+cd ./api
+echo Starting backend...
+php artisan serve > /dev/null 2>&1 &
+echo Starting frontend...
+cd ../src
+npm run start 

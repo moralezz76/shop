@@ -1,58 +1,85 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { RootState } from 'ReduxTypes';
 import { AppMenu, ExchangeRate, ShoppingCart, UserInfo, Wallet } from '../../components';
-import { requestAction } from '../../redux/global/actions';
-import { StorageHelper } from '../../utils/StorageHelper';
+import { requestAction, setRolesAction, setSessionAction } from '../../redux/global/actions';
+import { getSession } from '../../redux/global/selectors';
+import Storage from '../../utils/StorageHelper';
 import './MainLayout.scss';
 
 const MainLayout = (props: any) => {
-  const { request, children } = props;
-  const [userLoged, setUserLoged] = useState<{} | null>();
+  const { request, children, session, setSession, setRoles } = props;
 
   useEffect(() => {
-    const storage_user = StorageHelper.get('user');
-    setUserLoged(storage_user);
+    if (!session) {
+      const _session = Storage.get('session');
+      setSession(_session);
+
+      const onSuccess = (v: any = {}) => {
+        const { isValid, roles } = v;
+        if (isValid) {
+          //const currentSession = Storage.get('session');
+          /*setSession(session);
+          Storage.add('session', session);*/
+          setRoles(roles);
+        } else {
+          setSession({});
+        }
+      };
+
+      request({ name: 'login.get' }, { onSuccess });
+    }
   }, []);
 
-  useEffect(() => {
-    const validateUser = (v: any = {}) => {
-      const { isValid } = v;
-      if (isValid) {
-      } else {
-        setUserLoged(null);
-      }
-    };
-    if (userLoged) request({ name: 'login.get' }, validateUser);
-  }, [userLoged]);
-
-  const handleSocialLoginResponse = (user: any) => {
-    setUserLoged(user);
+  const handleSocialLoginResponse = (session: any, roles: string) => {
+    setSession(session);
+    Storage.add('session', session);
+    setRoles(roles);
   };
+
+  const appMenu = [
+    {
+      type: 'exit',
+      title: 'Disconnect',
+      roles: 'user',
+      onClick: (props: any) => {
+        request({ name: 'logout.get' });
+        Storage.clear();
+        setSession(null);
+      },
+    },
+  ];
 
   return (
     <div className="main-layout">
       <div className="left-menu">
         <h3>Usdt Shop</h3>
-        <UserInfo user={userLoged} onSocialLoginResponse={handleSocialLoginResponse} />
+        <UserInfo session={session} onSocialLoginResponse={handleSocialLoginResponse} />
         <Wallet />
         <ExchangeRate />
         <ShoppingCart />
-        <AppMenu request={request} />
+        <AppMenu appMenu={appMenu} />
       </div>
-      <div className="content">{children}</div>
+      <div className="content">
+        <div className="content-header"></div>
+        <div className="content-body">{children}</div>
+      </div>
     </div>
   );
 };
 
 const mapStateToProps = (state: RootState) => {
-  return {};
+  return {
+    session: getSession(state),
+  };
 };
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
       request: requestAction,
+      setSession: setSessionAction,
+      setRoles: setRolesAction,
     },
     dispatch
   );

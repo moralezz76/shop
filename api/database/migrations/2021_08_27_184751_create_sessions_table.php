@@ -19,6 +19,7 @@ class CreateSessionsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->unique();
             $table->string('token', 16);
+            $table->integer('unix_diff');
             $table->string('hashed_password', 16);
             $table->string('ip', 32);
             $table->timestamps();

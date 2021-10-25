@@ -9,7 +9,7 @@ import { getModals } from '../../redux/global/selectors';
 import './DialogCmp.scss';
 
 const DialogCmp = (props: any) => {
-  const { modals = [], removeModal, scrollY } = props;
+  const { modals = [], removeModal } = props;
   const modalEl = useRef<any>();
 
   const [dialogs, setDialogs] = useState<any>([]);
@@ -33,6 +33,17 @@ const DialogCmp = (props: any) => {
     document.body.style.overflow = modals.length ? 'hidden' : '';
     //}
   }, [modals]);
+
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const adjustScrollY = () => {
+      const { scrollY } = window;
+      setScrollY(scrollY);
+    };
+    adjustScrollY();
+    window.addEventListener('scroll', adjustScrollY);
+  }, []);
 
   return dialogs.length ? (
     <div
